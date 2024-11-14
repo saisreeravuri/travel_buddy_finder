@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <style>
+        /* Test styles */
+        body {
+            background-image: url(travelbuddy_register.jpg); /* Background should change */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .register-form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            max-width: 400px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .register-form h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+        .register-form input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .register-form button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .register-form .login-link {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .register-form .login-link a {
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .register-form .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-form">
+        <h2>Register</h2>
+        <form action="register.php" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <div class="login-link">
+            Already a user? <a href="/travel_buddy/login.html">Log in</a>
+        </div>
+    </div>
+</body>
+</html>

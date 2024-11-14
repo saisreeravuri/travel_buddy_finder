@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h1, h3 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        hr {
+            border: 1px solid #ccc;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f1f1f1;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .msg-icon, .view-msg-icon {
+            font-size: 20px;
+            color: #007bff;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h3 {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>User Profile</h1>
+        
+        <!-- Profile picture upload form -->
+        <form action="upload_profile.php" method="post" enctype="multipart/form-data">
+            <label for="profile_picture">Upload Profile Picture:</label>
+            <input type="file" name="profile_picture" id="profile_picture" required>
+            <button type="submit">Upload</button>
+        </form>
+        
+        <hr>
+
+        <!-- Upcoming trips section -->
+        <h3>Upcoming Trips</h3>
+        <ul id="trips-list">
+            <!-- List of trips will be populated here -->
+        </ul>
+
+        <hr>
+
+        <!-- Send message request form -->
+        <h3>Send a Message Request</h3>
+        <form action="send_message_request.php" method="post">
+            <label for="recipient">Recipient:</label>
+            <input type="text" id="recipient" name="recipient" placeholder="Enter recipient username" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" placeholder="Enter your message" required></textarea>
+
+            <button type="submit">Send Request</button>
+        </form>
+
+        <hr>
+
+        <!-- Sent message requests section -->
+        <h3>Sent Message Requests</h3>
+        <ul id="message-requests-list">
+            <!-- List of message requests will be populated here -->
+        </ul>
+    </div>
+
+    <script>
+        // Fetching upcoming trips via JavaScript
+        fetch('fetch_trips.php')
+            .then(response => response.json())
+            .then(data => {
+                let tripsList = document.getElementById('trips-list');
+                // Check if the data contains trips
+                if (data.length > 0) {
+                    data.forEach(trip => {
+                        let li = document.createElement('li');
+                        li.textContent = `${trip.destination} - ${trip.start_date} to ${trip.end_date}`;
+                        tripsList.appendChild(li);
+                    });
+                } else {
+                    let li = document.createElement('li');
+                    li.textContent = 'No upcoming trips available.';
+                    tripsList.appendChild(li);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching trips:', error);
+                let tripsList = document.getElementById('trips-list');
+                let li = document.createElement('li');
+                li.textContent = 'Failed to load trips. Please try again later.';
+                tripsList.appendChild(li);
+            });
+
+        // Fetching sent message requests via JavaScript
+        fetch('fetch_message_requests.php')
+            .then(response => response.json())
+            .then(data => {
+                let msgList = document.getElementById('message-requests-list');
+                // Check if the data contains message requests
+                if (data.length > 0) {
+                    data.forEach(msg => {
+                        let li = document.createElement('li');
+                        li.innerHTML = `${msg.recipient} - ${msg.message} <span class="view-msg-icon" onclick="viewMessage(${msg.id})">📧</span>`;
+                        msgList.appendChild(li);
+                    });
+                } else {
+                    let li = document.createElement('li');
+                    li.textContent = 'No sent message requests.';
+                    msgList.appendChild(li);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching message requests:', error);
+                let msgList = document.getElementById('message-requests-list');
+                let li = document.createElement('li');
+                li.textContent = 'Failed to load message requests. Please try again later.';
+                msgList.appendChild(li);
+            });
+
+        // Function to navigate to view messages page
+        function viewMessage(msgId) {
+            window.location.href = `view_message.php?message_id=${msgId}`;
+        }
+    </script>
+
+</body>
+</html>

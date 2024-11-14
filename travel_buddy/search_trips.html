@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Trips</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Find a Travel Buddy</h1>
+        <form action="search_results.php" method="GET">
+            <input type="text" name="destination" placeholder="Destination" required>
+            <input type="date" name="start_date">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <hr>
+        <div id="results"></div>
+    </div>
+</body>
+</html>

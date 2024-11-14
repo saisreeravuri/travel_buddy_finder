@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="styles.css">
+<head>
+    <meta charset="UTF-8">
+
+    <title>User Reviews</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>User Reviews</h1>
+        <ul id="reviews-list"></ul>
+    </div>
+    <script>
+        fetch('fetch_reviews.php?reviewed_user_id=2')  // Replace with dynamic user ID
+            .then(response => response.json())
+            .then(data => {
+                let reviewsList = document.getElementById('reviews-list');
+                reviewsList.innerHTML = data.map(review => 
+                    `<li>${review.username} rated ${review.rating}/5: ${review.comments}</li>`
+                ).join('');
+            });
+    </script>
+</body>
+</html>
